@@ -10,12 +10,21 @@
 
 .bottom-navigation a {
     display: block;
-    color: #f1c15a;
+   
 }
+
+.bottom-navigation .active {
+    color: #e3a92b; 
+}
+
 
 .bottom-navigation i {
     display: block;
    padding: 5px;
+   color: #9e9e9e;
+}
+.bottom-navigation span {
+   color: #9e9e9e;
 }
 
 .icon-move {

@@ -45,7 +45,7 @@
                                 <li><a href="#contact">Contact</a></li>
                             </ul>
                         </nav>
-                     
+
                         <div class="header-right">
                             <form action="#" class="header-search-form for-des">
                                 <input type="search" class="form-input" placeholder="Search Here...">
@@ -70,13 +70,13 @@
 
     <div id="viewport">
         <div id="js-scroll-content">
-            <nav class="bottom-navigation fixed-bottom bg-dark text-light d-lg-none">
+            <nav class="bottom-navigation fixed-bottom bg-light text-light d-lg-none">
                 <div class="container">
                     <div class="row">
                         <div class="col-3 text-center">
                             <a href="">
-                                <i class="fas fa-phone-alt icon-move"></i> 
-                                <span>Order</span> <!-- Text -->
+                                <i class="fas fa-phone-alt icon-move active"></i>
+                                <span class="active">Order</span> <!-- Text -->
                             </a>
                         </div>
                         <div class="col-3 text-center">
@@ -100,8 +100,8 @@
                     </div>
                 </div>
             </nav>
-            
-            
+
+
             <section class="main-banner" id="home">
                 <div class="js-parallax-scene">
                     <div class="banner-shape-1 w-100" data-depth="0.30">
@@ -167,322 +167,70 @@
                                     <div class="menu-tab text-center">
                                         <ul class="filters">
                                             <div class="filter-active"></div>
-                                            <li class="filter" data-filter=".all, .breakfast, .lunch, .dinner, .groceries">
+                                            <li class="filter" data-filter=".all">
                                                 <img src="{% static 'assets/images/menu-1.png' %}" alt="">
                                                 All
                                             </li>
-                                            <li class="filter" data-filter=".breakfast">
-                                                <img src="{% static 'assets/images/menu-2.png' %}" alt="">
-                                                Breakfast
+                                            {% for category in categories %}
+                                            <li class="filter" data-filter=".{{ category.name }}">
+                                                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                                                {{ category.name }}
                                             </li>
-                                            <li class="filter" data-filter=".lunch">
-                                                <img src="{% static 'assets/images/menu-3.png' %}" alt="">
-                                                Lunch
-                                            </li>
-                                            <li class="filter" data-filter=".dinner">
-                                                <img src="{% static 'assets/images/menu-4.png' %}" alt="">
-                                                Dinner
-                                            </li>
-                                            <li class="filter" data-filter=".groceries">
-                                                <img src="{% static 'assets/images/grocery.jpeg' %}" alt="">
-                                                Groceries
-                                            </li>
+                                            {% endfor %}
                                         </ul>
-                                        <div class="dots hide-on-mobile"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="menu-list-row">
                             <div class="row g-xxl-5 bydefault_show" id="menu-dish">
-                                <div class="col-lg-4 col-sm-6 dish-box-wp breakfast" data-cat="breakfast">
+                                {% for item in menu_items %}
+                                <div class="col-lg-4 col-sm-6 dish-box-wp {{ item.category.name }}"
+                                    data-cat="{{ item.category.name }}">
                                     <div class="dish-box text-center">
                                         <div class="dist-img">
-                                            <img src="{% static 'assets/images/dish/1.png' %}" alt="">
+                                            <img src="{{ item.image.url }}" alt="{{ item.name }}">
                                         </div>
-                                        <div class="dish-rating">
-                                            5
+                                        <!-- <div class="dish-rating">
+                                            {{ item.rating }}
                                             <i class="uil uil-star"></i>
-                                        </div>
+                                        </div> -->
                                         <div class="dish-title">
-                                            <h3 class="h3-title">Fresh Chicken Veggies</h3>
-                                            <p>120 calories</p>
-                                        </div>
-                                        <div class="dish-info">
-                                            <ul>
-                                                <li>
-                                                    <p>Type</p>
-                                                    <b>Non Veg</b>
-                                                </li>
-                                                <li>
-                                                    <p>Persons</p>
-                                                    <b>2</b>
-                                                </li>
-                                            </ul>
+                                            <h3 class="h3-title">{{ item.name }}</h3>
+                                            <p> Ugx {{ item.price }} </p>
                                         </div>
                                         <div class="dist-bottom-row">
                                             <ul>
+                                               
                                                 <li>
-                                                    <b>Ugx 499</b>
+                                                   
+                                                  <a href="">  <p class="sec-btn">Order Now</p></a>
+                                            
+                                       <li>
+                                                    <button class="dish-add-btn">
+                                                    <a href="">   <i class="fas fa-phone-alt"></i></a> 
+                                                    </button>
                                                 </li>
+                                               
                                                 <li>
                                                     <button class="dish-add-btn">
-                                                        <i class="uil uil-plus"></i>
+                                                        <a href="">        <i class="fas fa-shopping-cart"></i></a> 
                                                     </button>
                                                 </li>
                                             </ul>
                                         </div>
+                                        
                                     </div>
                                 </div>
-
-                                <!-- 2 -->
-                                <div class="col-lg-4 col-sm-6 dish-box-wp breakfast" data-cat="breakfast">
-                                    <div class="dish-box text-center">
-                                        <div class="dist-img">
-                                            <img src="{% static 'assets/images/dish/2.png' %}" alt="">
-                                        </div>
-                                        <div class="dish-rating">
-                                            4.3
-                                            <i class="uil uil-star"></i>
-                                        </div>
-                                        <div class="dish-title">
-                                            <h3 class="h3-title">Grilled Chicken</h3>
-                                            <p>80 calories</p>
-                                        </div>
-                                        <div class="dish-info">
-                                            <ul>
-                                                <li>
-                                                    <p>Type</p>
-                                                    <b>Non Veg</b>
-                                                </li>
-                                                <li>
-                                                    <p>Persons</p>
-                                                    <b>1</b>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="dist-bottom-row">
-                                            <ul>
-                                                <li>
-                                                    <b>Ugx 359</b>
-                                                </li>
-                                                <li>
-                                                    <button class="dish-add-btn">
-                                                        <i class="uil uil-plus"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 3 -->
-                                <div class="col-lg-4 col-sm-6 dish-box-wp lunch" data-cat="lunch">
-                                    <div class="dish-box text-center">
-                                        <div class="dist-img">
-                                            <img src="{% static 'assets/images/dish/3.png' %}" alt="">
-                                        </div>
-                                        <div class="dish-rating">
-                                            4
-                                            <i class="uil uil-star"></i>
-                                        </div>
-                                        <div class="dish-title">
-                                            <h3 class="h3-title">Panner Noodles</h3>
-                                            <p>100 calories</p>
-                                        </div>
-                                        <div class="dish-info">
-                                            <ul>
-                                                <li>
-                                                    <p>Type</p>
-                                                    <b>Veg</b>
-                                                </li>
-                                                <li>
-                                                    <p>Persons</p>
-                                                    <b>2</b>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="dist-bottom-row">
-                                            <ul>
-                                                <li>
-                                                    <b>Ugx 149</b>
-                                                </li>
-                                                <li>
-                                                    <button class="dish-add-btn">
-                                                        <i class="uil uil-plus"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 4 -->
-                                <div class="col-lg-4 col-sm-6 dish-box-wp lunch" data-cat="lunch">
-                                    <div class="dish-box text-center">
-                                        <div class="dist-img">
-                                            <img src="{% static 'assets/images/dish/4.png' %}" alt="">
-                                        </div>
-                                        <div class="dish-rating">
-                                            4.5
-                                            <i class="uil uil-star"></i>
-                                        </div>
-                                        <div class="dish-title">
-                                            <h3 class="h3-title">Chicken Noodles</h3>
-                                            <p>120 calories</p>
-                                        </div>
-                                        <div class="dish-info">
-                                            <ul>
-                                                <li>
-                                                    <p>Type</p>
-                                                    <b>Non Veg</b>
-                                                </li>
-                                                <li>
-                                                    <p>Persons</p>
-                                                    <b>2</b>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="dist-bottom-row">
-                                            <ul>
-                                                <li>
-                                                    <b>Ugx 379</b>
-                                                </li>
-                                                <li>
-                                                    <button class="dish-add-btn">
-                                                        <i class="uil uil-plus"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 5 -->
-                                <div class="col-lg-4 col-sm-6 dish-box-wp dinner" data-cat="dinner">
-                                    <div class="dish-box text-center">
-                                        <div class="dist-img">
-                                            <img src="{% static 'assets/images/dish/5.png' %}" alt="">
-                                        </div>
-                                        <div class="dish-rating">
-                                            5
-                                            <i class="uil uil-star"></i>
-                                        </div>
-                                        <div class="dish-title">
-                                            <h3 class="h3-title">Bread Boiled Egg</h3>
-                                            <p>120 calories</p>
-                                        </div>
-                                        <div class="dish-info">
-                                            <ul>
-                                                <li>
-                                                    <p>Type</p>
-                                                    <b>Non Veg</b>
-                                                </li>
-                                                <li>
-                                                    <p>Persons</p>
-                                                    <b>2</b>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="dist-bottom-row">
-                                            <ul>
-                                                <li>
-                                                    <b>Ugx 99</b>
-                                                </li>
-                                                <li>
-                                                    <button class="dish-add-btn">
-                                                        <i class="uil uil-plus"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 6 -->
-                                <div class="col-lg-4 col-sm-6 dish-box-wp dinner" data-cat="dinner">
-                                    <div class="dish-box text-center">
-                                        <div class="dist-img">
-                                            <img src="{% static 'assets/images/dish/6.png' %}" alt="">
-                                        </div>
-                                        <div class="dish-rating">
-                                            5
-                                            <i class="uil uil-star"></i>
-                                        </div>
-                                        <div class="dish-title">
-                                            <h3 class="h3-title">Immunity Dish</h3>
-                                            <p>120 calories</p>
-                                        </div>
-                                        <div class="dish-info">
-                                            <ul>
-                                                <li>
-                                                    <p>Type</p>
-                                                    <b>Veg</b>
-                                                </li>
-                                                <li>
-                                                    <p>Persons</p>
-                                                    <b>2</b>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="dist-bottom-row">
-                                            <ul>
-                                                <li>
-                                                    <b>Ugx 159</b>
-                                                </li>
-                                                <li>
-                                                    <button class="dish-add-btn">
-                                                        <i class="uil uil-plus"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-6 dish-box-wp groceries" data-cat="groceries">
-                                    <div class="dish-box text-center">
-                                        <div class="dist-img">
-                                            <img src="{% static 'assets/images/dish/gg.jpg' %}" alt="">
-                                        </div>
-                                        <div class="dish-rating">
-                                            5
-                                            <i class="uil uil-star"></i>
-                                        </div>
-                                        <div class="dish-title">
-                                            <h3 class="h3-title">Family Grocery</h3>
-                                            <p>120 calories</p>
-                                        </div>
-                                        <div class="dish-info">
-                                            <ul>
-                                                <li>
-                                                    <p>Type</p>
-                                                    <b>Veg</b>
-                                                </li>
-                                                <li>
-                                                    <p>Persons</p>
-                                                    <b>2</b>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="dist-bottom-row">
-                                            <ul>
-                                                <li>
-                                                    <b>Ugx 159</b>
-                                                </li>
-                                                <li>
-                                                    <button class="dish-add-btn">
-                                                        <i class="uil uil-plus"></i>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
+
             </section>
-           
+
 
             <section class="two-col-sec section">
                 <div class="container">

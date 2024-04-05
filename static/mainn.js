@@ -81,7 +81,7 @@ $(document).ready(function ($) {
                         easing: "ease-in-out",
                     },
                     load: {
-                        filter: ".all, .breakfast, .lunch, .dinner .groceries",
+                        filter: ".all",
                     },
                 });
     
