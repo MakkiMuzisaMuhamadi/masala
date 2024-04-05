@@ -70,6 +70,7 @@ $(document).ready(function ($) {
     $(function () {
         var filterList = {
             init: function () {
+                // Initialize MixItUp for menu section
                 $("#menu-dish").mixItUp({
                     selectors: {
                         target: ".dish-box-wp",
@@ -80,14 +81,16 @@ $(document).ready(function ($) {
                         easing: "ease-in-out",
                     },
                     load: {
-                        filter: ".all, .breakfast, .lunch, .dinner",
+                        filter: ".all, .breakfast, .lunch, .dinner .groceries",
                     },
                 });
+    
+       
             },
         };
         filterList.init();
     });
-
+    
     jQuery(".menu-toggle").click(function () {
         jQuery(".main-navigation").toggleClass("toggled");
     });

@@ -45,6 +45,7 @@
                                 <li><a href="#contact">Contact</a></li>
                             </ul>
                         </nav>
+                     
                         <div class="header-right">
                             <form action="#" class="header-search-form for-des">
                                 <input type="search" class="form-input" placeholder="Search Here...">
@@ -52,11 +53,11 @@
                                     <i class="uil uil-search"></i>
                                 </button>
                             </form>
-                            <a href="javascript:void(0)" class="header-btn header-cart">
+                            <a href="javascript:void(0)" class="header-btn ">
                                 <i class="uil uil-shopping-bag"></i>
                                 <span class="cart-number">3</span>
                             </a>
-                            <a href="javascript:void(0)" class="header-btn">
+                            <a href="javascript:void(0)" class="header-btn header-cart">
                                 <i class="uil uil-user-md"></i>
                             </a>
                         </div>
@@ -69,6 +70,38 @@
 
     <div id="viewport">
         <div id="js-scroll-content">
+            <nav class="bottom-navigation fixed-bottom bg-dark text-light d-lg-none">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <a href="">
+                                <i class="fas fa-phone-alt icon-move"></i> 
+                                <span>Order</span> <!-- Text -->
+                            </a>
+                        </div>
+                        <div class="col-3 text-center">
+                            <a href="#about">
+                                <i class="fas fa-utensils"></i> <!-- Icon -->
+                                <span>Foods</span> <!-- Text -->
+                            </a>
+                        </div>
+                        <div class="col-3 text-center">
+                            <a href="#about">
+                                <i class="fas fa-shopping-cart"></i> <!-- Icon -->
+                                <span>Groceries</span> <!-- Text -->
+                            </a>
+                        </div>
+                        <div class="col-3 text-center">
+                            <a href="#contact">
+                                <i class="fas fa-map-marker-alt"></i> <!-- Icon -->
+                                <span>Location</span> <!-- Text -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            
             <section class="main-banner" id="home">
                 <div class="js-parallax-scene">
                     <div class="banner-shape-1 w-100" data-depth="0.30">
@@ -84,12 +117,13 @@
                             <div class="col-lg-6">
                                 <div class="banner-text">
                                     <h1 class="h1-title">
-                                        Welcome to 
+                                        Order foods, groceries.
                                         <span>Masala</span>
-                                        restaurant.
+                                        Foods.
                                     </h1>
-                                    <p>This is Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam eius
-                                        vel tempore consectetur nesciunt? Nam eius tenetur recusandae optio aperiam.</p>
+                                    <p class="hide-on-mobile">Discover our wide range of delicious dishes made with the
+                                        freshest ingredients. Whether you're craving something spicy or savory, we have
+                                        the perfect meal for you.</p>
                                     <div class="banner-btn mt-4">
                                         <a href="#menu" class="sec-btn">Check our Menu</a>
                                     </div>
@@ -97,13 +131,16 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="banner-img-wp">
-                                    <div class="banner-img" style="background-image: url(static/assets/images/main-b.jpg);">
+                                    <div class="banner-img"
+                                        style="background-image: url(static/assets/images/dish/4.png);">
                                     </div>
                                 </div>
                                 <div class="banner-img-text mt-4 m-auto">
-                                    <h5 class="h5-title">Sushi</h5>
-                                    <p>this is Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                    <h5 class="h5-title">Chicken Noodles</h5>
+                                    <p>Delight your taste buds with our savory chicken noodle dish.</p>
+                                    <a href="" class="sec-btn">Order me</a>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -130,7 +167,7 @@
                                     <div class="menu-tab text-center">
                                         <ul class="filters">
                                             <div class="filter-active"></div>
-                                            <li class="filter" data-filter=".all, .breakfast, .lunch, .dinner">
+                                            <li class="filter" data-filter=".all, .breakfast, .lunch, .dinner, .groceries">
                                                 <img src="{% static 'assets/images/menu-1.png' %}" alt="">
                                                 All
                                             </li>
@@ -146,11 +183,17 @@
                                                 <img src="{% static 'assets/images/menu-4.png' %}" alt="">
                                                 Dinner
                                             </li>
+                                            <li class="filter" data-filter=".groceries">
+                                                <img src="{% static 'assets/images/grocery.jpeg' %}" alt="">
+                                                Groceries
+                                            </li>
                                         </ul>
+                                        <div class="dots hide-on-mobile"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="menu-list-row">
                             <div class="row g-xxl-5 bydefault_show" id="menu-dish">
                                 <div class="col-lg-4 col-sm-6 dish-box-wp breakfast" data-cat="breakfast">
@@ -395,11 +438,51 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4 col-sm-6 dish-box-wp groceries" data-cat="groceries">
+                                    <div class="dish-box text-center">
+                                        <div class="dist-img">
+                                            <img src="{% static 'assets/images/dish/gg.jpg' %}" alt="">
+                                        </div>
+                                        <div class="dish-rating">
+                                            5
+                                            <i class="uil uil-star"></i>
+                                        </div>
+                                        <div class="dish-title">
+                                            <h3 class="h3-title">Family Grocery</h3>
+                                            <p>120 calories</p>
+                                        </div>
+                                        <div class="dish-info">
+                                            <ul>
+                                                <li>
+                                                    <p>Type</p>
+                                                    <b>Veg</b>
+                                                </li>
+                                                <li>
+                                                    <p>Persons</p>
+                                                    <b>2</b>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="dist-bottom-row">
+                                            <ul>
+                                                <li>
+                                                    <b>Ugx 159</b>
+                                                </li>
+                                                <li>
+                                                    <button class="dish-add-btn">
+                                                        <i class="uil uil-plus"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+           
 
             <section class="two-col-sec section">
                 <div class="container">
@@ -595,10 +678,12 @@
                     <div class="row">
                         <div class="col-lg-8 m-auto">
                             <div class="about-video">
-                                <div class="about-video-img" style="background-image: url(static/assets/images/about.jpg);">
+                                <div class="about-video-img"
+                                    style="background-image: url(static/assets/images/about.jpg);">
                                 </div>
                                 <div class="play-btn-wp">
-                                    <a href="{% static 'assets/images/video.mp4' %}" data-fancybox="video" class="play-btn">
+                                    <a href="{% static 'assets/images/video.mp4' %}" data-fancybox="video"
+                                        class="play-btn">
                                         <i class="uil uil-play"></i>
 
                                     </a>
@@ -1171,7 +1256,7 @@
     <!-- smooth scroll  -->
     <script src="{% static 'assets/js/smooth-scroll.js' %}"></script>
     <!-- custom js  -->
-    <script src="{% static 'main.js' %}"></script>
+    <script src="{% static 'mainn.js' %}"></script>
 
 </body>
 

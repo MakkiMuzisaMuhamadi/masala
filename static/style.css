@@ -1,3 +1,35 @@
+.bottom-navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    height: 50px; 
+    line-height: 30px; 
+}
+
+.bottom-navigation a {
+    display: block;
+    color: #f1c15a;
+}
+
+.bottom-navigation i {
+    display: block;
+   padding: 5px;
+}
+
+.icon-move {
+    animation: moveUpDown 1s ease infinite alternate; 
+}
+
+@keyframes moveUpDown {
+    from {
+        transform: translateY(-5px); 
+    }
+    to {
+        transform: translateY(5px);
+    }
+}
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 /* font-family: 'Playfair Display', serif;
 font-family: 'Poppins', sans-serif; */
@@ -19,6 +51,7 @@ body {
 body, html {
     overflow-x: hidden;
 }
+
 
 img {
     max-width: 100%;
@@ -1847,4 +1880,18 @@ p {
     .blog-box {
         padding: 20px;
     }
+}
+@media only screen and (max-width: 768px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}
+.dots {
+    margin-top: 10px; /* Adjust as needed */
+}
+
+.dots::before {
+    content: "\2022 \2022 \2022"; 
+    font-size: 24px; 
+    color: #000; 
 }
