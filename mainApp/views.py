@@ -1,5 +1,5 @@
 from django import forms
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.shortcuts import redirect, render,  get_object_or_404
 from mainApp.models import *
 from django.shortcuts import render, redirect
@@ -21,9 +21,15 @@ from django.views.generic import View
 def index(request):
     categories = Category.objects.all()
     menu_items = MenuItem.objects.all()
+    banner = Banner.objects.first()
+    banner1 = Food_Banner_1.objects.first()
+    banner2 = Food_Banner_2.objects.first()
     context = {
         'categories': categories, 
-        'menu_items': menu_items
+        'menu_items': menu_items,
+        'banner': banner,
+        'banner1': banner1,
+        'banner2': banner2,
          }   
     return render (request, 'index.html', context)
 
@@ -99,6 +105,20 @@ def send_sms_notification(order_type):
         from_=settings.TWILIO_PHONE_NUMBER,
         to='' 
     )
+
+def orderme(request, model_name, item_id):
+    if model_name == 'product':
+        item = Food_Banner_1.objects.get(id=item_id)
+    elif model_name == 'anothermodel':
+        item = Banner.objects.get(id=item_id)
+    elif model_name == 'yetanothermodel':
+        item = Food_Banner_2.objects.get(id=item_id)
+    else:
+        return HttpResponseBadRequest("Invalid model name or ID")
+
+    context = {'item': item}
+    return render(request, 'orderme.html', context)
+
 def place_order(request):
     session_key = request.session.session_key
     cart_items = CartItem.objects.filter(session_key=session_key)
@@ -144,27 +164,26 @@ def place_order(request):
     return redirect('index')
 
 def buy_now(request):
-    order2 = BuyNow2.objects.create(
-        name = request.POST.get('name'),
-        phone_number = request.POST.get('phone_number'),
-        product_name = request.POST.get('product_name'),
-        product_price = request.POST.get('product_price'),
-        product_id = request.POST.get('product_id'),
-        product_brand = request.POST.get('product_brand'),
-        product_category = request.POST.get('product_category'),
-    )
-    order2.save()
-    html_content = render_to_string('buy_now_email_template.html', {'order2': order2})
-    text_content = strip_tags(html_content) 
+    if request.method == 'POST':
+        # Retrieve form data
+        name = request.POST.get('first_name')
+        phone_number = request.POST.get('phone')
+        product_name = request.POST.get('product_name')
+        address = request.POST.get('address')
+        product_price = request.POST.get('product_price')
+        product_id = request.POST.get('item_id')
 
-    # Send email
-    subject = 'New Order Created (Buy Now)'
-    from_email = settings.DEFAULT_FROM_EMAIL
-    recipient_list = ['']
+ 
+        order2 = BuyNow2.objects.create(
+            name=name,
+            phone_number=phone_number,
+            product_name=product_name,
+            product_price=product_price,
+            product_id=product_id,
+            address=address,
+        )
+        order2.save()
+        messages.success(request, 'Your order has been received. We will contact you soon.')
+        return redirect('index')
 
-    email = EmailMultiAlternatives(subject, text_content, from_email, recipient_list)
-    email.attach_alternative(html_content, "text/html")
-    email.send()
-    send_sms_notification('Buy Now Order')
-    messages.success(request, 'Your Order has been received, We shall contact you soon')
     return redirect('index')

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<section class="main-banner">
+
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="/">Home</a>
+                <span class="breadcrumb-item active">Checkout</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<form action="{% url 'buy_now' %}" method="post">
+    {% csrf_token %}
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-lg-12">
+            <h5 class="h3-title">Billing
+                    Address</h5>
+            <div class="bg-light p-30 mb-5">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label>Name</label>
+                        <input class="form-control" type="text" name="first_name" id="firstName" required>                        </div>
+                    
+                    <div class="col-md-12 form-group">
+                        <label>Phone Number</label>
+                        <input class="form-control" name="phone" type="text" id="phone" required>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label>Delivery Address</label>
+                        <input class="form-control" name="address" type="text"  required>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label>Order</label>
+                        <input type="hidden" name="product_name" value="{{ item.Title }}">
+                        <input class="form-control" type="text" value="{{ item.Title }}" disabled>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label>Price</label>
+                        <input type="hidden" name="product_price" value="{{ item.price }}">
+                        <input class="form-control" type="text" value="{{ item.price|intcomma }}" disabled>
+                    </div>
+                    
+                    <input type="hidden" name="item_id" value="{{ item.id }}">
+
+               </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Place Order</button>
+
+        </div>
+    </div>
+</div>
+</form>
+
+
+
+{% endblock  %}

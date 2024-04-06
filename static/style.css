@@ -501,8 +501,8 @@ ul {
 }
 
 .banner-img {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     background-size: cover;
     background-position: center;
     animation: biani 4.5s linear infinite alternate;
@@ -2014,3 +2014,9 @@ p {
     } 
   }
   
+
+  .message-container{
+    background-color: rgb(4, 155, 36);
+    color: white;
+
+}

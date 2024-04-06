@@ -1,9 +1,32 @@
 from django.db import models
 
 # Create your models here.
+class Banner(models.Model):
+    Title = models.CharField(max_length=100, default='')
+    price = models.DecimalField(max_digits=50, decimal_places=0, default=0) 
+    text = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='banner_images/')  
+    def __str__(self):
+        return self.text
+    
+class Food_Banner_1(models.Model):
+    Title = models.CharField(max_length=100, default='')
+    price = models.DecimalField(max_digits=50, decimal_places=0,default=0) 
+    text = models.TextField()
+    image = models.ImageField(upload_to='banner_images/')  
+    def __str__(self):
+        return self.text
+class Food_Banner_2(models.Model):
+    Title = models.CharField(max_length=100, default='')
+    price = models.DecimalField(max_digits=50, decimal_places=0,default=0) 
+    text = models.TextField()
+    image = models.ImageField(upload_to='banner_images/')  
+    def __str__(self):
+        return self.text
+    
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='category_images/')  # Add image field
+    image = models.ImageField(upload_to='category_images/') 
     def __str__(self):
         return self.name
 
@@ -11,7 +34,7 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     description = models.TextField() 
-    price = models.DecimalField(max_digits=10, decimal_places=0) 
+    price = models.DecimalField(max_digits=50, decimal_places=0) 
     image = models.ImageField(upload_to='menu_item_images/') 
     rating = models.DecimalField(max_digits=3, decimal_places=1)  
 
@@ -43,10 +66,9 @@ class BuyNow2(models.Model):
     name = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=20)
     product_name = models.CharField(max_length=255)
-    product_price = models.DecimalField(max_digits=10, decimal_places=2, default='')
+    address = models.CharField(max_length=255,default='')
+    product_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     product_id = models.CharField(max_length=255)
-    product_brand = models.CharField(max_length=255, default='')
-    product_category = models.CharField(max_length=255, default='')
     created_at = models.DateTimeField(auto_now_add=True,blank=True, null=True)
 
     def __str__(self):

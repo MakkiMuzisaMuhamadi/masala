@@ -9,5 +9,7 @@ urlpatterns = [
     path('place_order/', views.place_order, name='place_order'),
     path('buy-now/', views.buy_now, name='buy_now'),
     path('get_cart_count/', views.get_cart_count, name='get_cart_count'),
+    path('order-checkout/', views.orderme, name='orderme'),
+path('orderme/<str:model_name>/<int:item_id>/', views.orderme, name='orderme'),
 
 ]
