@@ -1,0 +1,102 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order Created (Buy Now)</title>
+    <style>
+        /* Your CSS styles for the email */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #3498db;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        h2 {
+            color: #3498db;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>New Order Created (Buy Now)</h2>
+    <p>Hello,</p>
+    <p>A new "Buy Now" order has been created. Here are the details:</p>
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>{{ order2.name }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ order2.phone_number }}</td>
+        </tr>
+        <tr>
+            <th>Product Name</th>
+            <td>{{ order2.product_name }}</td>
+        </tr>
+        <tr>
+            <th>Product Price</th>
+            <td>UGX {{ order2.product_price|intcomma }}</td>
+        </tr>
+        <tr>
+            <th>Product Brand</th>
+            <td>{{ order2.product_brand }}</td>
+        </tr>
+        <tr>
+            <th>Product Category</th>
+            <td>{{ order2.product_category }}</td>
+        </tr>
+    </table>
+    <p>
+        Click <a href="https://www.appliancesuganda.com/admin-applianceuganda">here</a> to access the admin panel.
+    </p>
+</body>
+</html>

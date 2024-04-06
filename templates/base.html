@@ -1,0 +1,352 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masala</title>
+    <!-- for icons  -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <!-- bootstrap  -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <!-- for swiper slider  -->
+    <link rel="stylesheet" href="{% static 'assets/css/swiper-bundle.min.css' %}">
+
+    <!-- fancy box  -->
+    <link rel="stylesheet" href="{% static 'assets/css/jquery.fancybox.min.css' %}">
+    <!-- custom css  -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body class="body-fixed">
+    <!-- start of header  -->
+    <header class="site-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header-logo">
+                        <a href="/index">
+                            <img src="{% static 'logo.png' %}" width="160" height="36" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="main-navigation">
+                        <button class="menu-toggle"><span></span><span></span></button>
+                        <nav class="header-menu">
+                            <ul class="menu food-nav-menu">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="#about">About</a></li>
+                                <li><a href="#menu">Menu</a></li>
+                                <li><a href="#gallery">Gallery</a></li>
+                                <li><a href="#contact">Contact</a></li>
+                                <li>
+                                    <form action="#" class="header-search-form d-lg-none">
+                                        <input type="search" class="form-input" placeholder="Search Here...">
+                                        <button type="submit">
+                                            <i class="uil uil-search"></i>
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <div class="header-right">
+                            <form action="#" class="header-search-form for-des">
+                                <input type="search" class="form-input" placeholder="Search Here...">
+                                <button type="submit">
+                                    <i class="uil uil-search"></i>
+                                </button>
+                            </form>
+                            <a href="{% url 'cart_detail' %}" class="header-btn ">
+                                <i class="uil uil-shopping-bag"></i>
+                                <span class="cart-number cart-count">0</span>
+                            </a>
+                            <a href="javascript:void(0)" class="header-btn header-cart">
+                                <i class="uil uil-user-md"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header ends  -->
+
+    <div id="viewport">
+        <div id="js-scroll-content">
+            <nav class="bottom-navigation fixed-bottom bg-light text-light d-lg-none">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <a href="">
+                                <i class="fas fa-phone-alt icon-move active"></i>
+                                <span class="active">Order</span> <!-- Text -->
+                            </a>
+                        </div>
+                        <div class="col-3 text-center">
+                            <a href="#about">
+                                <i class="fas fa-utensils"></i> <!-- Icon -->
+                                <span>Foods</span> <!-- Text -->
+                            </a>
+                        </div>
+                        <div class="col-3 text-center">
+                            <a href="#about">
+                                <i class="fas fa-shopping-cart"></i> <!-- Icon -->
+                                <span>Groceries</span> <!-- Text -->
+                            </a>
+                        </div>
+                        <div class="col-3 text-center">
+                            <a href="#contact">
+                                <i class="fas fa-map-marker-alt"></i> <!-- Icon -->
+                                <span>Location</span> <!-- Text -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+
+
+            {% block content %}
+            {% endblock %}
+
+            <script>
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    var addToCartButtons = document.querySelectorAll('.add-to-cart-btn button');
+
+                    addToCartButtons.forEach(function (button) {
+                        button.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            var productId = this.getAttribute('data-product-id');
+                            addToCart(productId);
+                        });
+                    });
+
+                    function updateCartCount() {
+                        fetch("{% url 'get_cart_count' %}")
+                            .then(response => response.json())
+                            .then(data => {
+                                // Update cart count in all elements with class 'cart-count'
+                                var cartCountElements = document.querySelectorAll('.cart-count');
+                                cartCountElements.forEach(function (element) {
+                                    element.innerText = data.count;
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }
+
+                    // Call the function initially to set the cart count
+                    updateCartCount();
+
+                    function addToCart(productId) {
+                        // Make an asynchronous request to the server to add the product to the cart
+                        fetch("{% url 'add_to_cart' 0 %}".replace('0', productId), {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value,
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Display the flash message
+                                showToast(data.message, data.status, 100000);
+                                updateCartCount();
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }
+
+                    function showToast(message, status, duration) {
+                        let box = document.createElement("div");
+                        box.classList.add("toast", `toast-${status}`);
+                        box.innerHTML = `<div class="toast-content-wrapper">
+                                <div class="toast-message">${message}</div>
+                                <div class="toast-progress"></div>
+                            </div>`;
+                        duration = duration || 5000;
+                        box.querySelector(".toast-progress").style.animationDuration =
+                            `${duration / 1000}s`;
+
+                        let toastAlready = document.body.querySelector(".toast");
+                        if (toastAlready) {
+                            toastAlready.remove();
+                        }
+
+                        document.body.appendChild(box);
+                    }
+
+                    // Change the class to 'custom-toast' instead of 'custom-toast.success-toast'
+                    let submit = document.querySelector(".custom-toast");
+
+                    submit.addEventListener("click", (e) => {
+                        showToast("Submitted Successfully", "success", 100000);
+                    });
+
+                    warn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        showToast("!warning! server error", "warning", 5000);
+                    });
+                });
+
+                setTimeout(function () {
+                    document.getElementById('message-container').style.display = 'none';
+                }, 7000);
+
+
+            </script>
+
+
+
+
+
+            <!-- footer starts  -->
+            <footer class="site-footer" id="contact">
+                <div class="top-footer section">
+                    <div class="sec-wp">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="footer-info">
+                                        <div class="footer-logo">
+                                            <a href="index.html">
+                                                <img src="{% static 'logo.png' %}" alt="">
+                                            </a>
+                                        </div>
+                                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia, tenetur.
+                                        </p>
+                                        <div class="social-icon">
+                                            <ul>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="uil uil-facebook-f"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="uil uil-instagram"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="uil uil-github-alt"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="uil uil-youtube"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="footer-flex-box">
+                                        <div class="footer-table-info">
+                                            <h3 class="h3-title">open hours</h3>
+                                            <ul>
+                                                <li><i class="uil uil-clock"></i> Mon-Thurs : 7am - 22pm</li>
+                                                <li><i class="uil uil-clock"></i> Fri-Sun : 8am - 22pm</li>
+                                            </ul>
+                                        </div>
+                                        <div class="footer-menu food-nav-menu">
+                                            <h3 class="h3-title">Links</h3>
+                                            <ul class="column-2">
+                                                <li>
+                                                    <a href="/" class="footer-active-menu">Home</a>
+                                                </li>
+                                                <li><a href="#about">About</a></li>
+                                                <li><a href="#menu">Menu</a></li>
+                                                <li><a href="#gallery">Gallery</a></li>
+                                                <li><a href="#blog">Blog</a></li>
+                                                <li><a href="#contact">Contact</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="footer-menu">
+                                            <h3 class="h3-title">Company</h3>
+                                            <ul>
+                                                <li><a href="#">Terms & Conditions</a></li>
+                                                <li><a href="#">Privacy Policy</a></li>
+                                                <li><a href="#">Cookie Policy</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <div class="copyright-text">
+                                    <p>Copyright &copy; 2021- {% now "Y" %}<span class="name"> Masala. </span>All Rights Reserved.
+                                     Designed   by
+                                        <a class="name" href="https://bionluxe.com" target="_blank">Bio n Luxe</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="scrolltop"><i class="uil uil-angle-up"></i></button>
+                    </div>
+                </div>
+            </footer>
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+    <!-- jquery  -->
+    <script src="{% static 'assets/js/jquery-3.5.1.min.js' %}"></script>
+    <!-- bootstrap -->
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+
+    <!-- fontawesome  -->
+    <script src="{% static 'assets/js/font-awesome.min.js' %}"></script>
+
+    <!-- swiper slider  -->
+    <script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
+
+    <!-- mixitup -- filter  -->
+    <script src="{% static 'assets/js/jquery.mixitup.min.js' %}"></script>
+
+    <!-- fancy box  -->
+    <script src="{% static 'assets/js/jquery.fancybox.min.js' %}"></script>
+
+    <!-- parallax  -->
+    <script src="{% static 'assets/js/parallax.min.js' %}"></script>
+
+    <!-- gsap  -->
+    <script src="{% static 'assets/js/gsap.min.js' %}"></script>
+
+    <!-- scroll trigger  -->
+    <script src="{% static 'assets/js/ScrollTrigger.min.js' %}"></script>
+    <!-- scroll to plugin  -->
+    <script src="{% static 'assets/js/ScrollToPlugin.min.js' %}"></script>
+    <!-- rellax  -->
+    <!-- <script src="assets/js/rellax.min.js"></script> -->
+    <!-- <script src="assets/js/rellax-custom.js"></script> -->
+    <!-- smooth scroll  -->
+    <script src="{% static 'assets/js/smooth-scroll.js' %}"></script>
+    <!-- custom js  -->
+    <script src="{% static 'mainn.js' %}"></script>
+
+</body>
+
+</html>
