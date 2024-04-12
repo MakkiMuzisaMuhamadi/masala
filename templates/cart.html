@@ -39,7 +39,7 @@
                     {% for item in cart_items %}
                     <tr>
                         <td class="align-middle">
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 50px;">
+                            <img src="{{ item.product.image_main.url }}" alt="{{ item.product.name }}" style="width: 50px;">
 
                         </td>
                         <td class="align-middle">{{ item.product.name }}</td>

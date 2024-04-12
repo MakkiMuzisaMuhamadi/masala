@@ -40,9 +40,15 @@
                     </div>
                     <div class="col-md-12 form-group">
                         <label>Order</label>
-                        <input type="hidden" name="product_name" value="{{ item.Title }}">
-                        <input class="form-control" type="text" value="{{ item.Title }}" disabled>
+                        {% if item.Title %}
+                            <input type="hidden" name="product_name" value="{{ item.Title }}">
+                            <input class="form-control" type="text" value="{{ item.Title }}" disabled>
+                        {% else %}
+                            <input type="hidden" name="product_name" value="{{ item.name }}">
+                            <input class="form-control" type="text" value="{{ item.name }}" disabled>
+                        {% endif %}
                     </div>
+                    
                     <div class="col-md-12 form-group">
                         <label>Price</label>
                         <input type="hidden" name="product_price" value="{{ item.price }}">

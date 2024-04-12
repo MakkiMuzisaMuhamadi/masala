@@ -21,6 +21,7 @@ from django.views.generic import View
 def index(request):
     categories = Category.objects.all()
     menu_items = MenuItem.objects.all()
+    grocery_items = Grocery.objects.all()
     banner = Banner.objects.first()
     banner1 = Food_Banner_1.objects.first()
     banner2 = Food_Banner_2.objects.first()
@@ -30,22 +31,33 @@ def index(request):
         'banner': banner,
         'banner1': banner1,
         'banner2': banner2,
+        'grocery_items': grocery_items,
          }   
     return render (request, 'index.html', context)
 
 
-def add_to_cart(request, product_id):
-    product = get_object_or_404(MenuItem, pk=product_id)
-    session_key = request.session.session_key
-    cart, created = CartItem.objects.get_or_create(session_key=session_key, product=product)
+def add_to_cart(request, product_type, product_id):
+    if product_type == 'MenuItem':
+        product = get_object_or_404(MenuItem, pk=product_id)
+    elif product_type == 'Grocery':
+        product = get_object_or_404(Grocery, pk=product_id)
+    else:
+        return JsonResponse({'error': 'Invalid product type'}, status=400)
+
+    # Create or update CartItem
+    cart_item, created = CartItem.objects.get_or_create(
+        content_type=ContentType.objects.get_for_model(product.__class__),
+        object_id=product.id,
+        session_key=request.session.session_key
+    )
 
     if not created:
-        cart.quantity += 1
-        cart.save()
+        cart_item.quantity += 1
+        cart_item.save()
 
-    # Return a JSON response with the message and status
     response_data = {'message': 'Item added to the cart successfully', 'status': 'success'}
     return JsonResponse(response_data)
+
 
 def get_cart_count(request):
     session_key = request.session.session_key
@@ -113,6 +125,10 @@ def orderme(request, model_name, item_id):
         item = Banner.objects.get(id=item_id)
     elif model_name == 'yetanothermodel':
         item = Food_Banner_2.objects.get(id=item_id)
+    elif model_name == 'MenuItem':
+        item = MenuItem.objects.get(id=item_id)
+    elif model_name == 'Grocery':
+        item = Grocery.objects.get(id=item_id)
     else:
         return HttpResponseBadRequest("Invalid model name or ID")
 
@@ -138,14 +154,17 @@ def place_order(request):
     )
     order.save() 
     for cart_item in cart_items:
+        content_type = ContentType.objects.get_for_model(cart_item.product.__class__)
+
+        # Create the OrderItem using the GenericForeignKey fields
         OrderItem.objects.create(
             order=order,
-            product=cart_item.product,
+            content_type=content_type,
+            object_id=cart_item.product.id,
             quantity=cart_item.quantity,
-            image=cart_item.product.image,
+            image=cart_item.product.image_main,
             price=cart_item.product.price
         )
-
     cart_items.delete()
 
     html_content = render_to_string('order_email_template.html', {'order': order})
@@ -187,3 +206,14 @@ def buy_now(request):
         return redirect('index')
 
     return redirect('index')
+
+
+
+def search_items(request):
+    query = request.GET.get('q')
+    menu_items = MenuItem.objects.filter(name__icontains=query) if query else MenuItem.objects.none()
+    grocery_items = Grocery.objects.filter(name__icontains=query) if query else Grocery.objects.none()
+    
+    items_found = bool(menu_items.exists() or grocery_items.exists())  # Flag indicating if any items were found
+
+    return render(request, 'search.html', {'menu_items': menu_items, 'grocery_items': grocery_items,'items_found': items_found, 'query': query})

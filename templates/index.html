@@ -4,546 +4,610 @@
 
 {% block content %}
 
-            <section class="main-banner" id="home">
-                {% if messages %}
-                <div class="message-container">
-                    {% for message in messages %}
-                    <div class="alert {{ message.tags }} alert-dismissible" role="alert" id="message-container">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="True">&times;</span>
-                        </button>
-                        {{ message }}
-                    </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                
+<section class="main-banner" id="home">
+    {% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" id="message-container">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="True">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-        
-                <div class="js-parallax-scene">
-                    <div class="banner-shape-1 w-100" data-depth="0.30">
-                        <img src="{% static 'assets/images/berry.png' %}" alt="">
-                    </div>
-                    <div class="banner-shape-2 w-100" data-depth="0.25">
-                        <img src="{% static 'assets/images/leaf.png' %}" alt="">
-                    </div>
-                </div>
-                <div class="sec-wp">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="banner-text">
-                                    <h1 class="h1-title">
-                                        Order foods, groceries.
-                                        <span>Masala</span>
-                                        Foods.
-                                    </h1>
-                                    <p class="hide-on-mobile">Discover our wide range of delicious dishes made with the
-                                        freshest ingredients. Whether you're craving something spicy or savory, we have
-                                        the perfect meal for you.</p>
-                                    <div class="banner-btn mt-4">
-                                        <a href="#menu" class="sec-btn">Check our Menu</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="banner-img-wp">
-                                    <div class="banner-img"
-                                        style="background-image: url({{banner.image.url}});">
-                                    </div>
-                                </div>
-                                <div class="banner-img-text mt-4 m-auto">
-                                    <h5 class="h5-title">{{banner.Title}}</h5>
-                                    <p>{{banner.text}} at only <span style="color: red;"> Ugx {{banner.price}}</span></p>
-                                   
-                                    <a href="{% url 'orderme' 'product' banner.id %}" class="sec-btn">Order me</a>
-                                </div>
 
-                            </div>
+
+    <div class="js-parallax-scene">
+        <div class="banner-shape-1 w-100" data-depth="0.30">
+            <img src="{% static 'assets/images/berry.png' %}" alt="">
+        </div>
+        <div class="banner-shape-2 w-100" data-depth="0.25">
+            <img src="{% static 'assets/images/leaf.png' %}" alt="">
+        </div>
+    </div>
+    <div class="sec-wp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="banner-text">
+                        <h1 class="h1-title">
+                            Order foods, groceries.
+                            <span>Masala</span>
+                            Foods.
+                        </h1>
+                        <p class="hide-on-mobile">Discover our wide range of delicious dishes made with the
+                            freshest ingredients. Whether you're craving something spicy or savory, we have
+                            the perfect meal for you.</p>
+                        <div class="banner-btn mt-4">
+                            <a href="#menu" class="sec-btn">Check our Menu</a>
                         </div>
                     </div>
                 </div>
-            </section>
-            <section style="background-image: url(assets/images/menu-bg.png);"
-                class="our-menu section bg-light repeat-img" id="menu">
-                <div class="sec-wp">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="sec-title text-center mb-5">
-                                    <p class="sec-sub-title mb-3">our menu</p>
-                                    <h2 class="h2-title">wake up early, <span>eat fresh & healthy</span></h2>
-                                    <div class="sec-title-shape mb-4">
-                                        <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-lg-6">
+                    <div class="banner-img-wp">
+                        <div class="banner-img" style="background-image: url({{banner.image.url}});">
                         </div>
-                        <div class="menu-tab-wp">
-                            <div class="row">
-                                <div class="col-lg-12 m-auto">
-                                    <div class="menu-tab text-center">
-                                        <ul class="filters">
-                                            <div class="filter-active"></div>
-                                            <li class="filter" data-filter=".all">
-                                                <img src="{% static 'assets/images/menu-1.png' %}" alt="">
-                                                All
-                                            </li>
-                                            {% for category in categories %}
-                                            <li class="filter" data-filter=".{{ category.name }}">
-                                                <img src="{{ category.image.url }}" alt="{{ category.name }}">
-                                                {{ category.name }}
-                                            </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="banner-img-text mt-4 m-auto">
+                        <h5 class="h5-title">{{banner.Title}}</h5>
+                        <p>{{banner.text}} at only <span style="color: red;"> Ugx {{banner.price}}</span></p>
 
-                        <div class="menu-list-row">
-                            <div class="row g-xxl-5 bydefault_show" id="menu-dish">
-                                {% for item in menu_items %}
-                                <div class="col-lg-4 col-sm-6 dish-box-wp {{ item.category.name }}"
-                                    data-cat="{{ item.category.name }}">
-                                    <div class="dish-box text-center">
-                                        <div class="dist-img">
-                                            <img src="{{ item.image.url }}" alt="{{ item.name }}">
-                                        </div>
-                                        <!-- <div class="dish-rating">
+                        <a href="{% url 'orderme' 'anothermodel' banner.id %}" class="sec-btn">Order me</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section style="background-image: url(assets/images/menu-bg.png);" class="our-menu section bg-light repeat-img"
+    id="menu">
+    <div class="sec-wp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sec-title text-center mb-5">
+                        <p class="sec-sub-title mb-3">our menu</p>
+                        <h2 class="h2-title">wake up early, <span>eat fresh & healthy</span></h2>
+                        <div class="sec-title-shape mb-4">
+                            <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-tab-wp">
+                <div class="row">
+                    <div class="col-lg-12 m-auto">
+                        <div class="menu-tab text-center">
+                            <ul class="filters">
+                                <div class="filter-active"></div>
+                                <li class="filter" data-filter=".all">
+                                    <img src="{% static 'assets/images/menu-1.png' %}" alt="">
+                                    All
+                                </li>
+                                {% for category in categories %}
+                                <li class="filter" data-filter=".{{ category.name }}">
+                                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                                    {{ category.name }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-list-row">
+                <div class="row g-xxl-5 bydefault_show" id="menu-dish">
+                    {% for item in menu_items %}
+                    <div class="col-lg-4 col-sm-6 dish-box-wp {{ item.category.name }}"
+                        data-cat="{{ item.category.name }}">
+                        <div class="dish-box text-center">
+                            <div class="dist-img">
+                                <img src="{{ item.image_main.url }}" alt="{{ item.name }}">
+                            </div>
+                            <!-- <div class="dish-rating">
                                             {{ item.rating }}
                                             <i class="uil uil-star"></i>
                                         </div> -->
-                                        <div class="dish-title">
-                                            <h3 class="h3-title">{{ item.name }}</h3>
-                                            <p style="color: black;"> Ugx {{ item.price|intcomma }}. </p>
-                                        </div>
-                                        <div class="dist-bottom-row">
-                                            <ul>
-                                               
-                                                <li>
-                                                   
+                            <div class="dish-title">
+                                <h3 class="h3-title">{{ item.name }}</h3>
+                                <p style="color: black;"> Ugx {{ item.price|intcomma }}. </p>
+                            </div>
+                            <div class="dist-bottom-row">
+                                <ul>
+                                    <li>
+                                        <button class="dish-add-btn">
+                                            <a href=""> <i class="fas fa-phone-alt"></i></a>
+                                        </button>
+                                    </li>
+                                    
+                                    <a href="{% url 'orderme' 'MenuItem' item.id %}" class="buy">Buy Now</a>
 
-                                            
-                                       <li>
-                                                    <button class="dish-add-btn">
-                                                    <a href="">   <i class="fas fa-phone-alt"></i></a> 
-                                                    </button>
-                                                </li>
-                                               
-                                                <li>
-                                                    <div class="add-to-cart-btn ">
-                                                    <form action="{% url 'add_to_cart' item.id %}" method="post">
-                                                        {% csrf_token %}
-                                                    <button class="dish-add-btn custom-toast   success-toast" data-product-id="{{ item.id }}" type="submit" id="add">
-                                                           <i class="fas fa-shopping-cart "></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                                </li>
-                                            </ul>
+                                  
+                                    
+                                    <li>
+                                        <div class="add-to-cart-btn ">
+                                            <form action="{% url 'add_to_cart' 'MenuItem' item.id %}" method="post">
+
+                                                {% csrf_token %}
+                                                <button class="dish-add-btn custom-toast   success-toast"
+                                                    data-product-id="{{ item.id }}" data-product-type="MenuItem"  type="submit" id="add">
+                                                    <i class="fas fa-shopping-cart "></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section style="background-image: url(assets/images/menu-bg.png);" class="our-menu section bg-light repeat-img"
+    id="grocery">
+    <div class="sec-wp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sec-title text-center mb-5">
+                        <p class="sec-sub-title mb-3">Groceries</p>
+                        <h2 class="h2-title">Fresh groceries, <span>delivered to your door</span></h2>
+
+                        <div class="sec-title-shape mb-4">
+                            <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-list-row">
+                <div class="row g-xxl-5 bydefault_show" id="menu-dish">
+                    {% for item in grocery_items %}
+                    <div class="col-lg-4 col-sm-6 dish-box-wp {{ item.category.name }}"
+                        data-cat="{{ item.category.name }}">
+                        <div class="dish-box text-center">
+                            <div class="dist-img">
+                                <img src="{{ item.image_main.url }}" alt="{{ item.name }}">
+                            </div>
+
+                            <div class="dish-title">
+                                <h3 class="h3-title">{{ item.name }}</h3>
+                                <p style="color: black;"> Ugx {{ item.price|intcomma }}. </p>
+                            </div>
+                            <div class="dist-bottom-row">
+                                <ul>
+
+                                    <li>
+                                        <button class="dish-add-btn">
+                                            <a href=""> <i class="fas fa-phone-alt"></i></a>
+                                        </button>
+                                    </li>
+                                    <a href="{% url 'orderme' 'Grocery' item.id %}" class="buy">Buy Now</a>
+                                    <li>
+                                        <div class="add-to-cart-btn ">
+                                            <form action="{% url 'add_to_cart' 'Grocery' item.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button class="dish-add-btn custom-toast   success-toast"
+                                                    data-product-id="{{ item.id }}" data-product-type="Grocery" type="submit" id="add">
+                                                    <i class="fas fa-shopping-cart "></i>
+                                                </button>
+                                            </form>
                                         </div>
                                         
-                                    </div>
-                                </div>
-                                {% endfor %}
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- groceries -->
+
+<section class="two-col-sec section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5">
+                <div class="sec-img mt-5">
+                    <img src="{{banner1.image.url}}" alt="">
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="sec-text">
+                    <h2 class="xxl-title">{{banner1.Title}}</h2>
+                    <p>{{banner1.text}} at only <span style="color: red;"> Ugx {{banner1.price}}</span></p>
+                    <a href="{% url 'orderme' 'product' banner1.id %}" class="sec-btn">Order me</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="two-col-sec section pt-0">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-1 order-2">
+                <div class="sec-text">
+                    <h2 class="xxl-title">{{banner2.Title}}</h2>
+                    <p>{{banner2.text}} at only <span style="color: red;"> Ugx {{banner2.price}}</span></p>
+                    <a href="{% url 'orderme' 'yetanothermodel' banner2.id %}" class="sec-btn">Order me</a>
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-2 order-1">
+                <div class="sec-img">
+                    <img src="{{banner2.image.url}}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="book-table section bg-light">
+    <div class="book-table-shape">
+        <img src="{% static 'assets/images/table-leaves-shape.png' %}" alt="">
+    </div>
+
+    <div class="book-table-shape book-table-shape2">
+        <img src="{% static 'assets/images/table-leaves-shape.png' %}" alt="">
+    </div>
+
+    <div class="sec-wp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sec-title text-center mb-5">
+                        <p class="sec-sub-title mb-3">Book Table</p>
+                        <h2 class="h2-title">Opening Table</h2>
+                        <div class="sec-title-shape mb-4">
+                            <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-table-info">
+                <div class="row align-items-center">
+                    <div class="col-lg-4">
+                        <div class="table-title text-center">
+                            <h3>Monday to Thursday</h3>
+                            <p>9:00 am - 22:00 pm</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="call-now text-center">
+                            <i class="uil uil-phone"></i>
+                            <a href="tel:+91-8866998866">+91 - 8866998866</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="table-title text-center">
+                            <h3>Friday to Sunday</h3>
+                            <p>8::00 am to 20:00 pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="gallery">
+                <div class="col-lg-10 m-auto">
+                    <div class="book-table-img-slider" id="icon">
+                        <div class="swiper-wrapper">
+                            <a href="{% static 'assets/images/bt1.jpg' %}" data-fancybox="table-slider"
+                                class="book-table-img back-img swiper-slide"
+                                style="background-image: url(static/assets/images/bt1.jpg)"></a>
+                            <a href="{% static 'assets/images/bt2.jpg' %}" data-fancybox="table-slider"
+                                class="book-table-img back-img swiper-slide"
+                                style="background-image: url(static/assets/images/bt2.jpg)"></a>
+                            <a href="{% static 'assets/images/bt3.jpg' %}" data-fancybox="table-slider"
+                                class="book-table-img back-img swiper-slide"
+                                style="background-image: url(static/assets/images/bt3.jpg)"></a>
+                            <a href="{% static 'assets/images/bt4.jpg' %}" data-fancybox="table-slider"
+                                class="book-table-img back-img swiper-slide"
+                                style="background-image: url(static/assets/images/bt4.jpg)"></a>
+                            <a href="{% static 'assets/images/bt1.jpg' %}" data-fancybox="table-slider"
+                                class="book-table-img back-img swiper-slide"
+                                style="background-image: url(static/static/assets/images/bt1.jpg)"></a>
+                            <a href="{% static 'assets/images/bt2.jpg' %}" data-fancybox="table-slider"
+                                class="book-table-img back-img swiper-slide"
+                                style="background-image: url(static/assets/images/bt2.jpg)"></a>
+                            <a href="{% static 'assets/images/bt3.jpg' %}" data-fancybox="table-slider"
+                                class="book-table-img back-img swiper-slide"
+                                style="background-image: url(static/assets/images/bt3.jpg)"></a>
+                            <a href="{% static 'assets/images/bt4.jpg' %}" data-fancybox="table-slider"
+                                class="book-table-img back-img swiper-slide"
+                                style="background-image: url(static/assets/images/bt4.jpg)"></a>
+                        </div>
+
+                        <div class="swiper-button-wp">
+                            <div class="swiper-button-prev swiper-button">
+                                <i class="uil uil-angle-left"></i>
+                            </div>
+                            <div class="swiper-button-next swiper-button">
+                                <i class="uil uil-angle-right"></i>
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+
+<section class="about-sec section" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="sec-title text-center mb-5">
+                    <p class="sec-sub-title mb-3">About Us</p>
+                    <h2 class="h2-title">Discover our <span>restaurant story</span></h2>
+                    <div class="sec-title-shape mb-4">
+                        <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
+                    </div>
+                    <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe dolore at
+                        aspernatur eveniet temporibus placeat voluptatum quaerat accusamus possimus
+                        cupiditate, quidem impedit sed libero id perspiciatis esse earum repellat quam.
+                        Dolore modi temporibus quae possimus accusantium, cum corrupti sed deserunt iusto at
+                        sapiente nihil sint iste similique soluta dolor! Quod.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 m-auto">
+                <div class="about-video">
+                    <div class="about-video-img" style="background-image: url(static/assets/images/about.jpg);">
+                    </div>
+                    <div class="play-btn-wp">
+                        <a href="{% static 'assets/images/video.mp4' %}" data-fancybox="video" class="play-btn">
+                            <i class="uil uil-play"></i>
+
+                        </a>
+                        <span>Watch The Recipe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="our-team section">
+    <div class="sec-wp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sec-title text-center mb-5">
+                        <p class="sec-sub-title mb-3">Our Team</p>
+                        <h2 class="h2-title">Meet our Chefs</h2>
+                        <div class="sec-title-shape mb-4">
+                            <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row team-slider">
+                <div class="swiper-wrapper">
+                    <div class="col-lg-4 swiper-slide">
+                        <div class="team-box text-center">
+                            <div style="background-image: url(static/assets/images/chef/c1.jpg);"
+                                class="team-img back-img">
+
+                            </div>
+                            <h3 class="h3-title">Nilay Hirpara</h3>
+                            <div class="social-icon">
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="uil uil-facebook-f"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-youtube"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 swiper-slide">
+                        <div class="team-box text-center">
+                            <div style="background-image: url(static/assets/images/chef/c2.jpg);"
+                                class="team-img back-img">
+
+                            </div>
+                            <h3 class="h3-title">Ravi Kumawat</h3>
+                            <div class="social-icon">
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="uil uil-facebook-f"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-youtube"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 swiper-slide">
+                        <div class="team-box text-center">
+                            <div style="background-image: url(static/assets/images/chef/c3.jpg);"
+                                class="team-img back-img">
+
+                            </div>
+                            <h3 class="h3-title">Navnit Kumar</h3>
+                            <div class="social-icon">
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="uil uil-facebook-f"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-youtube"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 swiper-slide">
+                        <div class="team-box text-center">
+                            <div style="background-image: url(static/assets/images/chef/c4.jpg);"
+                                class="team-img back-img">
+
+                            </div>
+                            <h3 class="h3-title">Pranav Badgal</h3>
+                            <div class="social-icon">
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="uil uil-facebook-f"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-youtube"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 swiper-slide">
+                        <div class="team-box text-center">
+                            <div style="background-image: url(static/assets/images/chef/c5.jpg);"
+                                class="team-img back-img">
+
+                            </div>
+                            <h3 class="h3-title">Priyotosh Dey</h3>
+                            <div class="social-icon">
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="uil uil-facebook-f"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="uil uil-youtube"></i>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="swiper-button-wp">
+                    <div class="swiper-button-prev swiper-button">
+                        <i class="uil uil-angle-left"></i>
+                    </div>
+                    <div class="swiper-button-next swiper-button">
+                        <i class="uil uil-angle-right"></i>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-            </section>
-
-
-            <section class="two-col-sec section">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-5">
-                            <div class="sec-img mt-5">
-                                <img src="{{banner1.image.url}}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="sec-text">
-                                <h2 class="xxl-title">{{banner1.Title}}</h2>
-                                <p>{{banner1.text}} at only <span style="color: red;"> Ugx {{banner1.price}}</span></p>
-                                <a href="{% url 'orderme' 'product' banner1.id %}" class="sec-btn">Order me</a>
-
-                            </div>
+<section class="faq-sec section-repeat-img" style="background-image: url(static/assets/images/faq-bg.png);">
+    <div class="sec-wp">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sec-title text-center mb-5">
+                        <p class="sec-sub-title mb-3">faqs</p>
+                        <h2 class="h2-title">Frequently <span>asked questions</span></h2>
+                        <div class="sec-title-shape mb-4">
+                            <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <section class="two-col-sec section pt-0">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 order-lg-1 order-2">
-                            <div class="sec-text">
-                                <h2 class="xxl-title">{{banner2.Title}}</h2>
-                                <p>{{banner2.text}} at only <span style="color: red;"> Ugx {{banner2.price}}</span></p>
-                                  <a href="{% url 'orderme' 'product' banner2.id %}" class="sec-btn">Order me</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 order-lg-2 order-1">
-                            <div class="sec-img">
-                                <img src="{{banner2.image.url}}" alt="">
-                            </div>
-                        </div>
-                    </div>
+            <div class="faq-row">
+                <div class="faq-box">
+                    <h4 class="h4-title">What are the login hours?</h4>
+                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
+                        vitae fugit laboriosam dolor distinctio.</p>
                 </div>
-            </section>
-
-            <section class="book-table section bg-light">
-                <div class="book-table-shape">
-                    <img src="{% static 'assets/images/table-leaves-shape.png' %}" alt="">
+                <div class="faq-box">
+                    <h4 class="h4-title">What do i get my refund?</h4>
+                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
+                        vitae fugit laboriosam dolor distinctio. Lorem ipsum dolor sit amet.</p>
                 </div>
-
-                <div class="book-table-shape book-table-shape2">
-                    <img src="{% static 'assets/images/table-leaves-shape.png' %}" alt="">
+                <div class="faq-box">
+                    <h4 class="h4-title">How long it will take food to arrive?</h4>
+                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
+                        vitae fugit laboriosam dolor distinctio.</p>
                 </div>
-
-                <div class="sec-wp">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="sec-title text-center mb-5">
-                                    <p class="sec-sub-title mb-3">Book Table</p>
-                                    <h2 class="h2-title">Opening Table</h2>
-                                    <div class="sec-title-shape mb-4">
-                                        <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="book-table-info">
-                            <div class="row align-items-center">
-                                <div class="col-lg-4">
-                                    <div class="table-title text-center">
-                                        <h3>Monday to Thursday</h3>
-                                        <p>9:00 am - 22:00 pm</p>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="call-now text-center">
-                                        <i class="uil uil-phone"></i>
-                                        <a href="tel:+91-8866998866">+91 - 8866998866</a>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="table-title text-center">
-                                        <h3>Friday to Sunday</h3>
-                                        <p>8::00 am to 20:00 pm</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" id="gallery">
-                            <div class="col-lg-10 m-auto">
-                                <div class="book-table-img-slider" id="icon">
-                                    <div class="swiper-wrapper">
-                                        <a href="{% static 'assets/images/bt1.jpg' %}" data-fancybox="table-slider"
-                                            class="book-table-img back-img swiper-slide"
-                                            style="background-image: url(static/assets/images/bt1.jpg)"></a>
-                                        <a href="{% static 'assets/images/bt2.jpg' %}" data-fancybox="table-slider"
-                                            class="book-table-img back-img swiper-slide"
-                                            style="background-image: url(static/assets/images/bt2.jpg)"></a>
-                                        <a href="{% static 'assets/images/bt3.jpg' %}" data-fancybox="table-slider"
-                                            class="book-table-img back-img swiper-slide"
-                                            style="background-image: url(static/assets/images/bt3.jpg)"></a>
-                                        <a href="{% static 'assets/images/bt4.jpg' %}" data-fancybox="table-slider"
-                                            class="book-table-img back-img swiper-slide"
-                                            style="background-image: url(static/assets/images/bt4.jpg)"></a>
-                                        <a href="{% static 'assets/images/bt1.jpg' %}" data-fancybox="table-slider"
-                                            class="book-table-img back-img swiper-slide"
-                                            style="background-image: url(static/static/assets/images/bt1.jpg)"></a>
-                                        <a href="{% static 'assets/images/bt2.jpg' %}" data-fancybox="table-slider"
-                                            class="book-table-img back-img swiper-slide"
-                                            style="background-image: url(static/assets/images/bt2.jpg)"></a>
-                                        <a href="{% static 'assets/images/bt3.jpg' %}" data-fancybox="table-slider"
-                                            class="book-table-img back-img swiper-slide"
-                                            style="background-image: url(static/assets/images/bt3.jpg)"></a>
-                                        <a href="{% static 'assets/images/bt4.jpg' %}" data-fancybox="table-slider"
-                                            class="book-table-img back-img swiper-slide"
-                                            style="background-image: url(static/assets/images/bt4.jpg)"></a>
-                                    </div>
-
-                                    <div class="swiper-button-wp">
-                                        <div class="swiper-button-prev swiper-button">
-                                            <i class="uil uil-angle-left"></i>
-                                        </div>
-                                        <div class="swiper-button-next swiper-button">
-                                            <i class="uil uil-angle-right"></i>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-pagination"></div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
+                <div class="faq-box">
+                    <h4 class="h4-title">Does your restaurant has both veg and non veg?</h4>
+                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
+                        vitae fugit laboriosam dolor distinctio. Lorem ipsum, dolor sit amet consectetur
+                        adipisicing elit. Voluptates, distinctio?</p>
                 </div>
-
-            </section>
-
-       
-
-            <section class="about-sec section" id="about">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="sec-title text-center mb-5">
-                                <p class="sec-sub-title mb-3">About Us</p>
-                                <h2 class="h2-title">Discover our <span>restaurant story</span></h2>
-                                <div class="sec-title-shape mb-4">
-                                    <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
-                                </div>
-                                <p>This is Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe dolore at
-                                    aspernatur eveniet temporibus placeat voluptatum quaerat accusamus possimus
-                                    cupiditate, quidem impedit sed libero id perspiciatis esse earum repellat quam.
-                                    Dolore modi temporibus quae possimus accusantium, cum corrupti sed deserunt iusto at
-                                    sapiente nihil sint iste similique soluta dolor! Quod.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-8 m-auto">
-                            <div class="about-video">
-                                <div class="about-video-img"
-                                    style="background-image: url(static/assets/images/about.jpg);">
-                                </div>
-                                <div class="play-btn-wp">
-                                    <a href="{% static 'assets/images/video.mp4' %}" data-fancybox="video"
-                                        class="play-btn">
-                                        <i class="uil uil-play"></i>
-
-                                    </a>
-                                    <span>Watch The Recipe</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="faq-box">
+                    <h4 class="h4-title">What is cost of food delivery?</h4>
+                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
+                        vitae fugit laboriosam dolor distinctio. Lorem ipsum dolor sit amet consectetur,
+                        adipisicing elit. Nam officiis ducimus, cum enim repudiandae animi.</p>
                 </div>
-            </section>
-
-            <section class="our-team section">
-                <div class="sec-wp">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="sec-title text-center mb-5">
-                                    <p class="sec-sub-title mb-3">Our Team</p>
-                                    <h2 class="h2-title">Meet our Chefs</h2>
-                                    <div class="sec-title-shape mb-4">
-                                        <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row team-slider">
-                            <div class="swiper-wrapper">
-                                <div class="col-lg-4 swiper-slide">
-                                    <div class="team-box text-center">
-                                        <div style="background-image: url(static/assets/images/chef/c1.jpg);"
-                                            class="team-img back-img">
-
-                                        </div>
-                                        <h3 class="h3-title">Nilay Hirpara</h3>
-                                        <div class="social-icon">
-                                            <ul>
-                                                <li>
-                                                    <a href="#"><i class="uil uil-facebook-f"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-instagram"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-youtube"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 swiper-slide">
-                                    <div class="team-box text-center">
-                                        <div style="background-image: url(static/assets/images/chef/c2.jpg);"
-                                            class="team-img back-img">
-
-                                        </div>
-                                        <h3 class="h3-title">Ravi Kumawat</h3>
-                                        <div class="social-icon">
-                                            <ul>
-                                                <li>
-                                                    <a href="#"><i class="uil uil-facebook-f"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-instagram"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-youtube"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 swiper-slide">
-                                    <div class="team-box text-center">
-                                        <div style="background-image: url(static/assets/images/chef/c3.jpg);"
-                                            class="team-img back-img">
-
-                                        </div>
-                                        <h3 class="h3-title">Navnit Kumar</h3>
-                                        <div class="social-icon">
-                                            <ul>
-                                                <li>
-                                                    <a href="#"><i class="uil uil-facebook-f"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-instagram"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-youtube"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 swiper-slide">
-                                    <div class="team-box text-center">
-                                        <div style="background-image: url(static/assets/images/chef/c4.jpg);"
-                                            class="team-img back-img">
-
-                                        </div>
-                                        <h3 class="h3-title">Pranav Badgal</h3>
-                                        <div class="social-icon">
-                                            <ul>
-                                                <li>
-                                                    <a href="#"><i class="uil uil-facebook-f"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-instagram"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-youtube"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 swiper-slide">
-                                    <div class="team-box text-center">
-                                        <div style="background-image: url(static/assets/images/chef/c5.jpg);"
-                                            class="team-img back-img">
-
-                                        </div>
-                                        <h3 class="h3-title">Priyotosh Dey</h3>
-                                        <div class="social-icon">
-                                            <ul>
-                                                <li>
-                                                    <a href="#"><i class="uil uil-facebook-f"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-instagram"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="uil uil-youtube"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-button-wp">
-                                <div class="swiper-button-prev swiper-button">
-                                    <i class="uil uil-angle-left"></i>
-                                </div>
-                                <div class="swiper-button-next swiper-button">
-                                    <i class="uil uil-angle-right"></i>
-                                </div>
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    </div>
+                <div class="faq-box">
+                    <h4 class="h4-title">Who is eligible for pro membership?</h4>
+                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
+                        vitae fugit laboriosam dolor distinctio. </p>
                 </div>
-            </section>
+            </div>
 
-           <section class="faq-sec section-repeat-img" style="background-image: url(static/assets/images/faq-bg.png);">
-                <div class="sec-wp">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="sec-title text-center mb-5">
-                                    <p class="sec-sub-title mb-3">faqs</p>
-                                    <h2 class="h2-title">Frequently <span>asked questions</span></h2>
-                                    <div class="sec-title-shape mb-4">
-                                        <img src="{% static 'assets/images/title-shape.svg' %}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        </div>
+    </div>
 
-                        <div class="faq-row">
-                            <div class="faq-box">
-                                <h4 class="h4-title">What are the login hours?</h4>
-                                <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                                    vitae fugit laboriosam dolor distinctio.</p>
-                            </div>
-                            <div class="faq-box">
-                                <h4 class="h4-title">What do i get my refund?</h4>
-                                <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                                    vitae fugit laboriosam dolor distinctio. Lorem ipsum dolor sit amet.</p>
-                            </div>
-                            <div class="faq-box">
-                                <h4 class="h4-title">How long it will take food to arrive?</h4>
-                                <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                                    vitae fugit laboriosam dolor distinctio.</p>
-                            </div>
-                            <div class="faq-box">
-                                <h4 class="h4-title">Does your restaurant has both veg and non veg?</h4>
-                                <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                                    vitae fugit laboriosam dolor distinctio. Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit. Voluptates, distinctio?</p>
-                            </div>
-                            <div class="faq-box">
-                                <h4 class="h4-title">What is cost of food delivery?</h4>
-                                <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                                    vitae fugit laboriosam dolor distinctio. Lorem ipsum dolor sit amet consectetur,
-                                    adipisicing elit. Nam officiis ducimus, cum enim repudiandae animi.</p>
-                            </div>
-                            <div class="faq-box">
-                                <h4 class="h4-title">Who is eligible for pro membership?</h4>
-                                <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                                    vitae fugit laboriosam dolor distinctio. </p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </section>
+</section>
 
 
-            {% endblock %}
+{% endblock %}

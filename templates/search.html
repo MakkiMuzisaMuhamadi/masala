@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<section class="main-banner">
+
+    <!-- Breadcrumb Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <div class="col-12">
+                <nav class="breadcrumb bg-light mb-30">
+                    <a class="breadcrumb-item text-dark" href="#">Home</a>
+                    <a class="breadcrumb-item text-dark" href="#">Search</a>
+                    <span class="breadcrumb-item active">{{ query  }}</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+    <div class="menu-list-row">
+        <div class="row g-xxl-5 bydefault_show" id="menu-dish">
+            {% if items_found %}
+            {% for item in menu_items %}
+            <div class="col-lg-4 col-sm-6 dish-box-wp {{ item.category.name }}" data-cat="{{ item.category.name }}">
+                <div class="dish-box text-center">
+                    <div class="dist-img">
+                        <img src="{{ item.image_main.url }}" alt="{{ item.name }}">
+                    </div>
+                    <div class="dish-title">
+                        <h3 class="h3-title">{{ item.name }}</h3>
+                        <p style="color: black;">Ugx {{ item.price|intcomma }}.</p>
+                    </div>
+                    <!-- Additional HTML for buttons and actions -->
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Repeat similar structure for grocery_items -->
+        </div>
+        <div class="row g-xxl-5 bydefault_show" id="menu-dish">
+            {% for item in grocery_items %}
+            <div class="col-lg-4 col-sm-6 dish-box-wp {{ item.category.name }}" data-cat="{{ item.category.name }}">
+                <div class="dish-box text-center">
+                    <div class="dist-img">
+                        <img src="{{ item.image_main.url }}" alt="{{ item.name }}">
+                    </div>
+                    <div class="dish-title">
+                        <h3 class="h3-title">{{ item.name }}</h3>
+                        <p style="color: black;">Ugx {{ item.price|intcomma }}.</p>
+                    </div>
+                    <!-- Additional HTML for buttons and actions -->
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-12 text-center">
+                <p>No items found. <a href="{% url 'index' %}">Go to shop</a></p>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+
+
+</section>
+{% endblock%}
