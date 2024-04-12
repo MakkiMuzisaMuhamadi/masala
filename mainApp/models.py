@@ -42,7 +42,7 @@ class MenuItem(models.Model):
     image_1 = models.ImageField(upload_to='menu_item_images/', blank=True)  
     image_2 = models.ImageField(upload_to='menu_item_images/', blank=True)  
     image_3 = models.ImageField(upload_to='menu_item_images/', blank=True)  
-
+    product_type = models.CharField(default='MenuItem', max_length=10, editable=False)
 class Grocery(models.Model):
     item_id = models.UUIDField( default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
@@ -52,6 +52,7 @@ class Grocery(models.Model):
     image_1 = models.ImageField(upload_to='grocery_item_images/', blank=True) 
     image_2 = models.ImageField(upload_to='grocery_item_images/', blank=True) 
     image_3 = models.ImageField(upload_to='grocery_item_images/', blank=True)  
+    product_type = models.CharField(default='Grocery', max_length=10, editable=False)
 
 class CartItem(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)

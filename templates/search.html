@@ -22,7 +22,7 @@
         <div class="row g-xxl-5 bydefault_show" id="menu-dish">
             {% if items_found %}
             {% for item in menu_items %}
-            <div class="col-lg-4 col-sm-6 dish-box-wp {{ item.category.name }}" data-cat="{{ item.category.name }}">
+            <div class="col-lg-4 col-sm-6 dish-box-wp">
                 <div class="dish-box text-center">
                     <div class="dist-img">
                         <img src="{{ item.image_main.url }}" alt="{{ item.name }}">
@@ -31,15 +31,60 @@
                         <h3 class="h3-title">{{ item.name }}</h3>
                         <p style="color: black;">Ugx {{ item.price|intcomma }}.</p>
                     </div>
-                    <!-- Additional HTML for buttons and actions -->
+                    {% if item.product_type == 'MenuItem' %}
+                    <div class="dist-bottom-row">
+                        <ul>
+
+                            <li>
+                                <button class="dish-add-btn">
+                                    <a href=""> <i class="fas fa-phone-alt"></i></a>
+                                </button>
+                            </li>
+                            <a href="{% url 'orderme' 'MenuItem' item.id %}" class="buy">Buy Now</a>
+                            <li>
+                                <div class="add-to-cart-btn ">
+                                    <form action="{% url 'add_to_cart' 'MenuItem' item.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="dish-add-btn custom-toast   success-toast"
+                                            data-product-id="{{ item.id }}" data-product-type="MenuItem" type="submit" id="add">
+                                            <i class="fas fa-shopping-cart "></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                    {% elif item.product_type == 'Grocery' %}
+                    <div class="dist-bottom-row">
+                        <ul>
+
+                            <li>
+                                <button class="dish-add-btn">
+                                    <a href=""> <i class="fas fa-phone-alt"></i></a>
+                                </button>
+                            </li>
+                            <a href="{% url 'orderme' 'Grocery' item.id %}" class="buy">Buy Now</a>
+                            <li>
+                                <div class="add-to-cart-btn ">
+                                    <form action="{% url 'add_to_cart' 'Grocery' item.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="dish-add-btn custom-toast   success-toast"
+                                            data-product-id="{{ item.id }}" data-product-type="Grocery" type="submit" id="add">
+                                            <i class="fas fa-shopping-cart "></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
-            <!-- Repeat similar structure for grocery_items -->
-        </div>
-        <div class="row g-xxl-5 bydefault_show" id="menu-dish">
             {% for item in grocery_items %}
-            <div class="col-lg-4 col-sm-6 dish-box-wp {{ item.category.name }}" data-cat="{{ item.category.name }}">
+            <div class="col-lg-4 col-sm-6 dish-box-wp">
                 <div class="dish-box text-center">
                     <div class="dist-img">
                         <img src="{{ item.image_main.url }}" alt="{{ item.name }}">
@@ -48,7 +93,55 @@
                         <h3 class="h3-title">{{ item.name }}</h3>
                         <p style="color: black;">Ugx {{ item.price|intcomma }}.</p>
                     </div>
-                    <!-- Additional HTML for buttons and actions -->
+                    {% if item.product_type == 'MenuItem' %}
+                    <div class="dist-bottom-row">
+                        <ul>
+
+                            <li>
+                                <button class="dish-add-btn">
+                                    <a href=""> <i class="fas fa-phone-alt"></i></a>
+                                </button>
+                            </li>
+                            <a href="{% url 'orderme' 'MenuItem' item.id %}" class="buy">Buy Now</a>
+                            <li>
+                                <div class="add-to-cart-btn ">
+                                    <form action="{% url 'add_to_cart' 'MenuItem' item.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="dish-add-btn custom-toast   success-toast"
+                                            data-product-id="{{ item.id }}" data-product-type="MenuItem" type="submit" id="add">
+                                            <i class="fas fa-shopping-cart "></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                    {% elif item.product_type == 'Grocery' %}
+                    <div class="dist-bottom-row">
+                        <ul>
+
+                            <li>
+                                <button class="dish-add-btn">
+                                    <a href=""> <i class="fas fa-phone-alt"></i></a>
+                                </button>
+                            </li>
+                            <a href="{% url 'orderme' 'Grocery' item.id %}" class="buy">Buy Now</a>
+                            <li>
+                                <div class="add-to-cart-btn ">
+                                    <form action="{% url 'add_to_cart' 'Grocery' item.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button class="dish-add-btn custom-toast   success-toast"
+                                            data-product-id="{{ item.id }}" data-product-type="Grocery" type="submit" id="add">
+                                            <i class="fas fa-shopping-cart "></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -56,10 +149,10 @@
             <div class="col-12 text-center">
                 <p>No items found. <a href="{% url 'index' %}">Go to shop</a></p>
             </div>
-        {% endif %}
+            {% endif %}
         </div>
     </div>
-
+    
 
 </section>
 {% endblock%}

@@ -207,7 +207,17 @@ def buy_now(request):
 
     return redirect('index')
 
+def grocery_items_view(request):
 
+    grocery_items = Grocery.objects.all()
+
+    return render(request, 'grocery.html', {'grocery_items': grocery_items,})
+
+def menu_items_view(request):
+
+    menu_items = MenuItem.objects.all()
+
+    return render(request, 'foods.html', {'menu_items': menu_items,})
 
 def search_items(request):
     query = request.GET.get('q')
