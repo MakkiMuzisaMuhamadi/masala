@@ -97,3 +97,11 @@ class BuyNow2(models.Model):
 
     def __str__(self):
         return f"{self.name}'s Order for {self.product_name}"
+    
+
+class FAQ(models.Model):
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+
+    def __str__(self):
+        return self.question

@@ -149,6 +149,10 @@
                     {% endfor %}
                 </div>
             </div>
+            <div class="text-center mt-4">
+                <a href="/foods" class="sec-btn">Browse More</a>
+            </div>
+
         </div>
     </div>
 
@@ -214,6 +218,10 @@
                     {% endfor %}
                 </div>
             </div>
+            <div class="text-center mt-4">
+                <a href="/grocery-store" class="sec-btn">Browse More</a>
+            </div>
+
         </div>
     </div>
 
@@ -570,38 +578,12 @@
             </div>
 
             <div class="faq-row">
+                {% for question in questions %}
                 <div class="faq-box">
-                    <h4 class="h4-title">What are the login hours?</h4>
-                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                        vitae fugit laboriosam dolor distinctio.</p>
+                    <h4 class="h4-title">{{question.question}}</h4>
+                    <p>{{question.answer}}</p>
                 </div>
-                <div class="faq-box">
-                    <h4 class="h4-title">What do i get my refund?</h4>
-                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                        vitae fugit laboriosam dolor distinctio. Lorem ipsum dolor sit amet.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="h4-title">How long it will take food to arrive?</h4>
-                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                        vitae fugit laboriosam dolor distinctio.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="h4-title">Does your restaurant has both veg and non veg?</h4>
-                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                        vitae fugit laboriosam dolor distinctio. Lorem ipsum, dolor sit amet consectetur
-                        adipisicing elit. Voluptates, distinctio?</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="h4-title">What is cost of food delivery?</h4>
-                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                        vitae fugit laboriosam dolor distinctio. Lorem ipsum dolor sit amet consectetur,
-                        adipisicing elit. Nam officiis ducimus, cum enim repudiandae animi.</p>
-                </div>
-                <div class="faq-box">
-                    <h4 class="h4-title">Who is eligible for pro membership?</h4>
-                    <p>It is Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus ipsum
-                        vitae fugit laboriosam dolor distinctio. </p>
-                </div>
+                {% endfor  %}
             </div>
 
         </div>

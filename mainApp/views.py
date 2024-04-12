@@ -20,11 +20,12 @@ from django.views.generic import View
 # Create your views here.
 def index(request):
     categories = Category.objects.all()
-    menu_items = MenuItem.objects.all()
-    grocery_items = Grocery.objects.all()
+    menu_items = MenuItem.objects.all()[:12]
+    grocery_items = Grocery.objects.all()[:12]
     banner = Banner.objects.first()
     banner1 = Food_Banner_1.objects.first()
     banner2 = Food_Banner_2.objects.first()
+    questions = FAQ.objects.all()
     context = {
         'categories': categories, 
         'menu_items': menu_items,
@@ -32,6 +33,7 @@ def index(request):
         'banner1': banner1,
         'banner2': banner2,
         'grocery_items': grocery_items,
+        'questions': questions,
          }   
     return render (request, 'index.html', context)
 
