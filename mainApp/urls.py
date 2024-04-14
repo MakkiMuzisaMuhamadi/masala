@@ -14,4 +14,5 @@ urlpatterns = [
     path('order-checkout/', views.orderme, name='orderme'),
     path('orderme/<str:model_name>/<int:item_id>/', views.orderme, name='orderme'),
      path('search/', views.search_items, name='search_items'),
+         path('get-bannertexts/', views.get_bannertexts, name='get_bannertexts'),
 ]

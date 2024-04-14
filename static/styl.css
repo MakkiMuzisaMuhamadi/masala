@@ -788,6 +788,13 @@ p {
     min-height: 50px;
     z-index: -1;
 }
+.groceryfilter-active {
+    position: absolute;
+    left: 0;
+    top: 12px;
+    min-height: 50px;
+    z-index: -1;
+}
 
 .menu-tab ul li img {
     margin-right: 10px;
@@ -799,8 +806,15 @@ p {
     color: #ffffff;
     background: linear-gradient(145deg, #e3a92b, #ffc933);
 }
+.menu-tab ul .groceryfilter-active {
+    color: #ffffff;
+    background: linear-gradient(145deg, #e3a92b, #ffc933);
+}
 
 .menu-list-row .bydefault_show .dish-box-wp {
+    display: inline-block !important;
+}
+.menu-list-row .bydefault .grocerybox {
     display: inline-block !important;
 }
 
@@ -2036,3 +2050,27 @@ p {
     color: #fff;
   
   }
+
+  .typewriter-container {
+    height: 150px; 
+    overflow: hidden; 
+}
+.typewriter {
+    display: inline-block;
+    overflow: hidden; 
+    color: rgb(255, 166, 0);
+}
+.cursor {
+    border-right: .15em solid orange; /* The typewriter cursor */
+    animation: blink-caret .75s step-end infinite;
+    display: inline-block;
+}
+/* The typewriter cursor animation */
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: orange;
+    }
+}

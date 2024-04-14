@@ -10,6 +10,11 @@ class Banner(models.Model):
     image = models.ImageField(upload_to='banner_images/')  
     def __str__(self):
         return self.text
+class BannerTexts(models.Model):
+    text = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.text
     
 class Food_Banner_1(models.Model):
     Title = models.CharField(max_length=100, default='')
@@ -28,9 +33,21 @@ class Food_Banner_2(models.Model):
     
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='category_images/') 
+
     def __str__(self):
         return self.name
+
+    def get_formatted_name(self):
+        return self.name.lower().replace(" ", "-")
+
+    
+class GroceryCategory(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+    def get_formatted_groceryname(self):
+        return self.name.lower().replace(" ", "-")
+
 
 class MenuItem(models.Model):
     item_id = models.UUIDField( default=uuid.uuid4, editable=False)
@@ -43,6 +60,7 @@ class MenuItem(models.Model):
     image_2 = models.ImageField(upload_to='menu_item_images/', blank=True)  
     image_3 = models.ImageField(upload_to='menu_item_images/', blank=True)  
     product_type = models.CharField(default='MenuItem', max_length=10, editable=False)
+    
 class Grocery(models.Model):
     item_id = models.UUIDField( default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
@@ -52,6 +70,7 @@ class Grocery(models.Model):
     image_1 = models.ImageField(upload_to='grocery_item_images/', blank=True) 
     image_2 = models.ImageField(upload_to='grocery_item_images/', blank=True) 
     image_3 = models.ImageField(upload_to='grocery_item_images/', blank=True)  
+    category = models.ForeignKey(GroceryCategory, on_delete=models.PROTECT)
     product_type = models.CharField(default='Grocery', max_length=10, editable=False)
 
 class CartItem(models.Model):

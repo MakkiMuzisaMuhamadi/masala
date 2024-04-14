@@ -1,21 +1,25 @@
 import uuid
-from django.db import transaction
 from django.core.management.base import BaseCommand
-from mainApp.models import *
-
+from mainApp.models import Category
 
 class Command(BaseCommand):
-    help = 'Update existing records with UUID primary keys'
+    help = 'Generate food categories'
 
     def handle(self, *args, **kwargs):
-        items_to_update = MenuItem.objects.filter(id__isnull=True)
-        for item in items_to_update:
-            item.id = uuid.uuid4()
-            item.save()
+        # List of food categories
+        food_categories = [
+            'Fast Foods',
+            'Chinese Foods',
+            'Local Foods',
+            'Italian Foods',
+            'Mexican Foods',
+            'Japanese Foods',
+            'Indian Foods',
+            'International Foods'
+        ]
 
-        groceries_to_update = Grocery.objects.filter(id__isnull=True)
-        for grocery in groceries_to_update:
-            grocery.id = uuid.uuid4()
-            grocery.save()
+        # Create food categories
+        for category_name in food_categories:
+            Category.objects.create(name=category_name)
 
-        self.stdout.write(self.style.SUCCESS('UUIDs updated successfully'))
+        self.stdout.write(self.style.SUCCESS('Food categories created successfully'))

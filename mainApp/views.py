@@ -17,23 +17,33 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.views.generic import View
+import random
 # Create your views here.
+def get_bannertexts(request):
+    texts = list(BannerTexts.objects.values_list('text', flat=True))
+    random.shuffle(texts)
+    return JsonResponse({'texts': texts})
+
 def index(request):
     categories = Category.objects.all()
     menu_items = MenuItem.objects.all()[:12]
     grocery_items = Grocery.objects.all()[:12]
-    banner = Banner.objects.first()
+    grocery_categories = GroceryCategory.objects.all()[:6]
+    banners = Banner.objects.first()
+    bannertexts = BannerTexts.objects.first()
     banner1 = Food_Banner_1.objects.first()
     banner2 = Food_Banner_2.objects.first()
     questions = FAQ.objects.all()
     context = {
         'categories': categories, 
         'menu_items': menu_items,
-        'banner': banner,
+        'banners': banners,
+        'bannertexts': bannertexts,
         'banner1': banner1,
         'banner2': banner2,
         'grocery_items': grocery_items,
         'questions': questions,
+        'grocery_categories': grocery_categories,
          }   
     return render (request, 'index.html', context)
 
