@@ -220,16 +220,17 @@ def buy_now(request):
     return redirect('index')
 
 def grocery_items_view(request):
-
+    grocery_categories = GroceryCategory.objects.all()
     grocery_items = Grocery.objects.all()
 
-    return render(request, 'grocery.html', {'grocery_items': grocery_items,})
+    return render(request, 'grocery.html', {'grocery_items': grocery_items, 'grocery_categories':grocery_categories})
 
 def menu_items_view(request):
+    categories = Category.objects.all()
 
     menu_items = MenuItem.objects.all()
 
-    return render(request, 'foods.html', {'menu_items': menu_items,})
+    return render(request, 'foods.html', {'menu_items': menu_items, 'categories':categories})
 
 def search_items(request):
     query = request.GET.get('q')
