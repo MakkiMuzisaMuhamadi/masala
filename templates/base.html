@@ -17,7 +17,7 @@
     <!-- fancy box  -->
     <link rel="stylesheet" href="{% static 'assets/css/jquery.fancybox.min.css' %}">
     <!-- custom css  -->
-    <link rel="stylesheet" href="{% static 'styl.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 
 <body class="body-fixed">
@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-2">
-                    <div class="header-logo">
+                    <div class="header-logo hide-on-mobile">
                         <a href="/index">
                             <img src="{% static 'logo.png' %}" width="160" height="36" alt="Logo">
                         </a>
@@ -44,7 +44,8 @@
                                 <li><a href="#gallery">Gallery</a></li>
                                 <li><a href="#contact">Contact</a></li>
                                 <li>
-                                    <form method="GET" action="{% url 'search_items' %}" class="header-search-form d-lg-none">
+                                    <form method="GET" action="{% url 'search_items' %}"
+                                        class="header-search-form d-lg-none">
                                         <input type="text" name="q" class="form-input" placeholder="Search Here...">
                                         <button type="submit">
                                             <i class="uil uil-search"></i>
@@ -53,7 +54,12 @@
                                 </li>
                             </ul>
                         </nav>
-
+                        <form method="GET" action="{% url 'search_items' %}" class="header-search-form d-lg-none">
+                            <input type="text" name="q" class="form-input" placeholder="Search Here...">
+                            <button type="submit">
+                                <i class="uil uil-search"></i>
+                            </button>
+                        </form>
                         <div class="header-right">
                             <form method="GET" action="{% url 'search_items' %}" class="header-search-form for-des">
                                 <input type="text" name="q" class="form-input" placeholder="Search Here...">
@@ -61,6 +67,9 @@
                                     <i class="uil uil-search"></i>
                                 </button>
                             </form>
+                            <a class="d-lg-none" href="javascript:void(0)" style="margin-right: 20px;">
+                                <i class="uil uil-user-md"></i>
+                            </a>
                             <a href="{% url 'cart_detail' %}" class="header-btn ">
                                 <i class="uil uil-shopping-bag"></i>
                                 <span class="cart-number cart-count">0</span>
@@ -84,18 +93,18 @@
                         <div class="col-3 text-center">
                             <a href="/">
                                 <i class="fas fa-home"></i>
-                                <span>Home</span> 
+                                <span>Home</span>
                             </a>
                         </div>
                         <div class="col-3 text-center">
                             <a href="">
                                 <i class="fas fa-phone-alt icon-move active"></i>
-                                <span class="active">Order</span> 
+                                <span class="active">Order</span>
                             </a>
                         </div>
                         <div class="col-3 text-center">
                             <a href="/foods">
-                                <i class="fas fa-utensils"></i> 
+                                <i class="fas fa-utensils"></i>
                                 <span>Foods</span>
                             </a>
                         </div>
@@ -105,7 +114,7 @@
                                 <span>Groceries</span> <!-- Text -->
                             </a>
                         </div>
-                        
+
                     </div>
                 </div>
             </nav>
@@ -116,93 +125,93 @@
             {% endblock %}
 
             <script>
-document.addEventListener('DOMContentLoaded', function () {
-    var addToCartButtons = document.querySelectorAll('.add-to-cart-btn button');
+                document.addEventListener('DOMContentLoaded', function () {
+                    var addToCartButtons = document.querySelectorAll('.add-to-cart-btn button');
 
-    addToCartButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            event.preventDefault();
-            var productId = this.getAttribute('data-product-id');
-            var productType = this.getAttribute('data-product-type'); 
+                    addToCartButtons.forEach(function (button) {
+                        button.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            var productId = this.getAttribute('data-product-id');
+                            var productType = this.getAttribute('data-product-type');
 
-            addToCart(productType, productId);
-        });
-    });
+                            addToCart(productType, productId);
+                        });
+                    });
 
-    function updateCartCount() {
-        fetch("{% url 'get_cart_count' %}")
-            .then(response => response.json())
-            .then(data => {
-                // Update cart count in all elements with class 'cart-count'
-                var cartCountElements = document.querySelectorAll('.cart-count');
-                cartCountElements.forEach(function (element) {
-                    element.innerText = data.count;
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
+                    function updateCartCount() {
+                        fetch("{% url 'get_cart_count' %}")
+                            .then(response => response.json())
+                            .then(data => {
+                                // Update cart count in all elements with class 'cart-count'
+                                var cartCountElements = document.querySelectorAll('.cart-count');
+                                cartCountElements.forEach(function (element) {
+                                    element.innerText = data.count;
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }
 
-    // Call the function initially to set the cart count
-    updateCartCount();
+                    // Call the function initially to set the cart count
+                    updateCartCount();
 
-    function addToCart(productType, productId) {
-        // Make an asynchronous request to the server to add the product to the cart
-        fetch(`{% url 'add_to_cart' '0' 0 %}`.replace('0', productType).replace('0', productId), {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Display the flash message
-            showToast(data.message, data.status, 100000);
-            updateCartCount();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+                    function addToCart(productType, productId) {
+                        // Make an asynchronous request to the server to add the product to the cart
+                        fetch(`{% url 'add_to_cart' '0' 0 %}`.replace('0', productType).replace('0', productId), {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': document.querySelector('input[name="csrfmiddlewaretoken"]').value,
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Display the flash message
+                                showToast(data.message, data.status, 100000);
+                                updateCartCount();
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }
 
-    function showToast(message, status, duration) {
-        let box = document.createElement("div");
-        box.classList.add("toast", `toast-${status}`);
-        box.innerHTML = `<div class="toast-content-wrapper">
+                    function showToast(message, status, duration) {
+                        let box = document.createElement("div");
+                        box.classList.add("toast", `toast-${status}`);
+                        box.innerHTML = `<div class="toast-content-wrapper">
                 <div class="toast-message">${message}</div>
                 <div class="toast-progress"></div>
             </div>`;
-        duration = duration || 5000;
-        box.querySelector(".toast-progress").style.animationDuration =
-            `${duration / 1000}s`;
+                        duration = duration || 5000;
+                        box.querySelector(".toast-progress").style.animationDuration =
+                            `${duration / 1000}s`;
 
-        let toastAlready = document.body.querySelector(".toast");
-        if (toastAlready) {
-            toastAlready.remove();
-        }
+                        let toastAlready = document.body.querySelector(".toast");
+                        if (toastAlready) {
+                            toastAlready.remove();
+                        }
 
-        document.body.appendChild(box);
-    }
+                        document.body.appendChild(box);
+                    }
 
-    // Change the class to 'custom-toast' instead of 'custom-toast.success-toast'
-    let submit = document.querySelector(".custom-toast");
+                    // Change the class to 'custom-toast' instead of 'custom-toast.success-toast'
+                    let submit = document.querySelector(".custom-toast");
 
-    submit.addEventListener("click", (e) => {
-        showToast("Submitted Successfully", "success", 100000);
-    });
+                    submit.addEventListener("click", (e) => {
+                        showToast("Submitted Successfully", "success", 100000);
+                    });
 
-    warn.addEventListener("click", (e) => {
-        e.preventDefault();
-        showToast("!warning! server error", "warning", 5000);
-    });
+                    warn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        showToast("!warning! server error", "warning", 5000);
+                    });
 
-    setTimeout(function () {
-        document.getElementById('message-container').style.display = 'none';
-    }, 7000);
-});
+                    setTimeout(function () {
+                        document.getElementById('message-container').style.display = 'none';
+                    }, 7000);
+                });
             </script>
             <!-- footer starts  -->
             <footer class="site-footer" id="contact">
@@ -286,8 +295,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         <div class="row">
                             <div class="col-lg-12 text-center">
                                 <div class="copyright-text">
-                                    <p>Copyright &copy; 2021- {% now "Y" %}<span class="name"> Massavu. </span>All Rights Reserved.
-                                     Designed   by
+                                    <p>Copyright &copy; 2021- {% now "Y" %}<span class="name"> Massavu. </span>All
+                                        Rights Reserved.
+                                        Designed by
                                         <a class="name" href="https://bionluxe.com" target="_blank">Bio n Luxe</a>
                                     </p>
                                 </div>
